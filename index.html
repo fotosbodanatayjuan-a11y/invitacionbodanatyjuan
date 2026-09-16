@@ -186,6 +186,12 @@ html,body{overscroll-behavior:none;}
   background:none !important;
   box-shadow:inset 0 0 0 5px #fff7e033 !important;
 }
+/* AJUSTE ÚNICO — centrado vertical del libro, sin modificar su estructura */
+.stage{align-items:center;justify-content:center}
+.book{transform:translateY(-2.5svh)}
+@media(max-height:720px){
+  .book{transform:translateY(-2svh)}
+}
 </style>
 </head><body>
 <div class="stage"><main class="book" id="book">
