@@ -71,7 +71,7 @@ h2{color:#294f36}.chapter{color:#647461}.ornament{color:#3f654a;text-shadow:0 0 
 /* CORRECCIÓN MÓVIL — conserva la mecánica y el diseño de escritorio; evita solapamiento de hojas en teléfonos */
 @media (max-width:520px){
   html,body{width:100%;height:100%;overflow:hidden;}
-  .stage{width:100%;height:100svh;min-height:100svh;padding:8px;overflow:visible;box-sizing:border-box;}
+  .stage{width:100%;height:100svh;min-height:100svh;padding:8px;overflow:hidden;box-sizing:border-box;}
   /* En móvil mantenemos la proporción real del libro para que no se deforme
      ni se pierdan los bordes o el contenido de las páginas. */
   .book{width:min(96vw,450px);height:auto;aspect-ratio:450/840;max-height:calc(100svh - 16px);perspective:1800px;-webkit-perspective:1800px;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;margin:auto;}
@@ -81,7 +81,14 @@ h2{color:#294f36}.chapter{color:#647461}.ornament{color:#3f654a;text-shadow:0 0 
   .page,.back{inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;}
   .page{transform:translateZ(0);-webkit-transform:translateZ(0);}
   .back{transform:rotateY(180deg) translateZ(0);-webkit-transform:rotateY(180deg) translateZ(0);}
-  .content{overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+  .content{
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    height: 100%;
+    max-height: 100%;
+    box-sizing: border-box;}
   .content::-webkit-scrollbar{width:0;height:0;}
   /* Ajuste fino para pantallas estrechas: más aire lateral sin agrandar el texto. */
   .content{padding-left:20px;padding-right:20px;}
