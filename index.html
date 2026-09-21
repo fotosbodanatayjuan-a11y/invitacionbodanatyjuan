@@ -199,6 +199,29 @@ html,body{overscroll-behavior:none;}
   .book{transform:translateY(-2svh)}
 }
 </style>
+
+<style id="mobile-overlap-fix">
+/* CORRECCIÓN DE SOLAPAMIENTO EN CELULAR
+   Solo actúa en pantallas angostas (celular). En computador no cambia nada.
+   Problema: las 11 hojas están apiladas y visibles a la vez; los navegadores móviles no siempre
+   respetan su orden (z-index / backface-visibility) y las fotos de otras hojas se cuelan encima.
+   Solución: se renderiza únicamente la hoja actual; las demás se ocultan con visibility. */
+@media (max-width:520px){
+  /* 1) Toda hoja queda oculta, pero recién cuando termina su animación de giro (retraso 1.1s) */
+  .stack>.sheet{
+    visibility:hidden;
+    transition:transform 1.05s cubic-bezier(.18,.73,.16,1),visibility 0s linear 1.1s;
+  }
+  /* 2) La única hoja visible en reposo es la primera que aún no se ha volteado; aparece al instante */
+  .stack>.sheet:first-child:not(.flipped),
+  .stack>.sheet.flipped+.sheet:not(.flipped){
+    visibility:visible;
+    transition:transform 1.05s cubic-bezier(.18,.73,.16,1),visibility 0s linear 0s;
+  }
+  /* 3) La hoja que gira queda por encima de las demás mientras se voltea */
+  .stack>.sheet.flipped{z-index:60}
+}
+</style>
 </head><body>
 <div class="stage"><main class="book" id="book">
 <section class="cover" id="cover"><div class="cover-content"><button class="open-btn" id="openBook">📖 Abrir nuestro cuento</button></div></section>
@@ -219,7 +242,7 @@ html,body{overscroll-behavior:none;}
    </div>
   </div>
   <div class="back"></div>
-</div></div><div class="hint" id="hint">Desliza la hoja para continuar ✨</div></main></div>
+</div></div><div class="hint" id="hint">Desliza la hoja para continuar..✨</div></main></div>
 <audio id="loveAudio" preload="auto" loop src="love-story.mp3"></audio>
 <script>
 'use strict';
